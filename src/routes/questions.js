@@ -1,1 +1,19 @@
-//Your Code Here
+import express from 'express';
+import authenticate from '../middleware/authHandler.js';
+import { getAllQuestions, getQuestionById, createQuestion, updateQuestion,deleteQuestion, upvoteQuestion, downvoteQuestion } from '../controllers/questionController.js';
+import { getAnswersByQuestionId, createAnswer } from '../controllers/answerController.js';
+
+const router = express.Router();
+
+router.get('/', getAllQuestions);
+router.get('/:id', getQuestionById);
+router.get('/:questionId/answers', getAnswersByQuestionId);
+
+router.post('/', authenticate, createQuestion);
+router.put('/:id', authenticate, updateQuestion);
+router.delete('/:id', authenticate, deleteQuestion);
+router.post('/:id/upvote', authenticate, upvoteQuestion);
+router.post('/:id/downvote', authenticate, downvoteQuestion);
+router.post('/:questionId/answers', authenticate, createAnswer);
+
+export default router;

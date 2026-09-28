@@ -65,7 +65,7 @@ export const updateQuestionService = async (id, title, description, tags, logged
     if (!question) {
         throw createAppError('Question not found', 404);
     }
-    if (!question.author.equals(loggedInUser._id) && !loggedInUser.isAdmin) {
+    if (!question.author.equals(loggedInUser.id ?? loggedInUser._id) && !loggedInUser.isAdmin) {
         throw createAppError('You are not authorized to update this question', 403);
     }
     const tagNames = tags.split(',').map((tag) => tag.trim().toLowerCase()).filter(Boolean);
@@ -97,7 +97,7 @@ export const deleteQuestionService = async (id, loggedInUser) => {
     if (!question) {
         throw createAppError('Question not found', 404);
     }
-    if (!question.author.equals(loggedInUser._id) && !loggedInUser.isAdmin) {
+    if (!question.author.equals(loggedInUser.id ?? loggedInUser._id) && !loggedInUser.isAdmin) {
         throw createAppError('You are not authorized to delete this question', 403);
     }
     await Answer.deleteMany({ questionId: question._id });

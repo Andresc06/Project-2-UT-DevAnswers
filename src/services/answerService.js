@@ -24,7 +24,7 @@ export const updateAnswerService = async (answerId, answerText, loggedInUser) =>
     if (!answer) {
         throw createAppError('Answer not found', 404);
     }
-    if (!answer.author.equals(loggedInUser._id) && !loggedInUser.isAdmin) {
+    if (!answer.author.equals(loggedInUser.id ?? loggedInUser._id) && !loggedInUser.isAdmin) {
         throw createAppError('You are not authorized to update this answer', 403);
     }
     answer.answerText = answerText;
@@ -39,7 +39,7 @@ export const deleteAnswerService = async (answerId, loggedInUser) => {
     if (!answer) {
         throw createAppError('Answer not found', 404);
     }
-    if (!answer.author.equals(loggedInUser._id) && !loggedInUser.isAdmin) {
+    if (!answer.author.equals(loggedInUser.id ?? loggedInUser._id) && !loggedInUser.isAdmin) {
         throw createAppError('You are not authorized to delete this answer', 403);
     }
     await answer.deleteOne();
