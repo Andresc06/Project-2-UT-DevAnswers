@@ -12,11 +12,14 @@ export const getAllQuestionsService = async () => {
         throw createAppError('No questions found', 404);
     }
 
-    for (const question of questions) {
-        question.answerCount = await Answer.countDocuments({ questionId: question._id });
-    }
+    const questionsWithAnswerCount = await Promise.all(
+        questions.map(async (question) => {
+            const answerCount = await Answer.countDocuments({ questionId: question._id });
+            return { ...question.toObject(), answerCount };
+        })
+    );
 
-    return questions;
+    return questionsWithAnswerCount;
 
 }
 
@@ -32,9 +35,8 @@ export const getQuestionByIdService = async (id) => {
     await question.populate('tags', 'name');
 
     const answers = await Answer.find({ questionId: question._id }).populate('author', 'name');
-    question.answers = answers;
 
-    return question;
+    return { ...question.toObject(), answers };
 }
 
 export const createQuestionService = async (title, description, tags, author) => {
