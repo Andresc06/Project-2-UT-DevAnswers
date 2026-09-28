@@ -1,4 +1,3 @@
-
 import Answer from '../models/Answer.js';
 import { createAppError } from '../utils/createAppError.js';
 import { handleVote } from './voteService.js';
