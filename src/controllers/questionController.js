@@ -25,7 +25,7 @@ export const getQuestionById = async (req, res) => {
 export const createQuestion = async (req, res) => {
     const { title, description, tags } = req.body;
     const author = req.user.id;
-    const newQuestion = await questionService.createQuestionService(title, description, tags, author);
+    const newQuestion = await questionService.createQuestionService({ title, description, tags, author });
 
     res.status(201).json({
         success: true,

@@ -41,7 +41,7 @@ export const getQuestionByIdService = async (id) => {
     return { ...question.toObject(), answers };
 }
 
-export const createQuestionService = async (title, description, tags, author) => {
+export const createQuestionService = async ({ title, description, tags, author }) => {
     const tagNames = tags.split(',').map((tag) => tag.trim().toLowerCase()).filter(Boolean);
 
     const tagIds = await Promise.all(

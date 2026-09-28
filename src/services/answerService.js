@@ -11,7 +11,7 @@ export const getAnswersByQuestionIdService = async (questionId) => {
     return answers;
 }
 
-export const createAnswerService = async (questionId, answerText, author) => {
+export const createAnswerService = async ({ questionId, answerText, author }) => {
     const answer = await Answer.create({ questionId, answerText, author });
     await answer.populate('author', 'name');
     return answer;

@@ -16,7 +16,7 @@ export const createAnswer = async (req, res) => {
     const { answerText } = req.body;
     const author = req.user.id;
     const { questionId } = req.params;
-    const newAnswer = await answerService.createAnswerService(questionId, answerText, author);
+    const newAnswer = await answerService.createAnswerService({ questionId, answerText, author });
 
     res.status(201).json({
         success: true,
