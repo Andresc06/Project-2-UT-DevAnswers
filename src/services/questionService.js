@@ -5,7 +5,10 @@ import { createAppError } from '../utils/createAppError.js';
 import { handleVote } from './voteService.js';
 
 export const getAllQuestionsService = async () => {
-    const questions = await Question.find().populate('author', 'name').populate('tags', 'name');
+    const questions = await Question.find()
+        .populate('author', 'name')
+        .populate('tags', 'name')
+        .sort({ createdAt: -1 });
 
     if (!questions || questions.length === 0) {
         throw createAppError('No questions found', 404);
